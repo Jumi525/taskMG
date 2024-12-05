@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="Task-manager" content="we believe that planning is the key" />
+    <meta
+      name="Task-manager"
+      content="HTML, Tailwind CSS, JavaScript, tutorials, examples"
+    />
+    <meta name="author" content="Gabriel" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph Meta Tags (for Social Media Sharing) -->
+    <meta property="og:title" content="FoodHaven" />
+    <meta
+      property="og:description"
+      content="we believe that planning is the key"
+    />
+    <meta property="og:image" content="https://example.com/your-image.jpg" />
+    <meta property="og:url" content="https://example.com" />
+    <meta property="og:type" content="website" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="TaskManager-Your day planner" />
+    <meta name="twitter:title" content="TaskManger" />
+    <meta
+      name="twitter:description"
+      content="we believe that planning is the key"
+    />
+    <meta name="twitter:image" content="https://example.com/your-image.jpg" />
+
+    <!-- Favicons -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+
+    <!-- Page Title -->
+    <title>Task Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Navigation Bar -->
+
+    <header class="bg-blue-700 text-white shadow-md">
+      <div
+        class="container mx-auto flex items-center justify-between px-6 py-4"
+      >
+        <a href="#" class="text-2xl font-bold text-gray-800"
+          >Task<span class="text-blue-500">Manager</span></a
+        >
+        <nav
+          class="navbar fixed top-0 left-0 h-full w-56 -translate-x-full bg-blue-500 transition-transform transform z-40 md:static md:flex-grow md:z-0 md:translate-x-0 md:bg-transparent text-green-400 md:ml-5 md:min-w-max"
+        >
+          <button
+            class="close-btn p-1 rounded-full hover:bg-gray-600 text-black max-w-max grid place-content-center ml-auto m-3 md:hidden"
+          >
+            <ion-icon name="close-circle-outline" class="size-7"></ion-icon>
+          </button>
+          <ul
+            class="flex flex-col mx-2 mb-9 md:mx-0 md:mb-0 text-gray-300 md:text-black md:flex-row"
+          >
+            <div
+              class="md:min-w-[430px] md:flex md:items-center md:justify-around md:mx-auto"
+            >
+              <li
+                class="py-3 border-t-[2px] border-solid border-white/50 hover:bg-blue-600 md:hover:text-white md:hover:bg-transparent pl-2 md:py-0 md:border-none md:pl-0"
+              >
+                <a href="#add-task">Overview</a>
+              </li>
+              <li
+                class="py-3 border-t-[2px] border-solid border-white/50 hover:bg-blue-600 md:hover:text-white md:hover:bg-transparent pl-2 md:py-0 md:border-none md:pl-0"
+              >
+                <a href="#taskes">TaskForm</a>
+              </li>
+              <li
+                class="py-3 border-t-[2px] border-solid border-white/50 hover:bg-blue-600 md:hover:text-white md:hover:bg-transparent pl-2 md:py-0 md:border-none md:pl-0"
+              >
+                <a href="#prep">Preparation</a>
+              </li>
+              <li
+                class="py-3 border-t-[2px] border-solid border-white/50 hover:bg-blue-600 md:hover:text-white md:hover:bg-transparent pl-2 md:py-0 md:border-none md:pl-0"
+              >
+                <a href="task.html">AddTask</a>
+              </li>
+            </div>
+            <div class="md:flex md:gap-2 md:items-center md:ml-3">
+              <li
+                class="border-t-[2px] py-3 border-solid border-white/50 hover:bg-blue-600 md:hover:bg-none pl-2 md:border-none md:py-1 px-3 md:bg-blue-500 md:rounded-lg"
+              >
+                <a href="auth.html#login">Login</a>
+              </li>
+              <li
+                class="border-t-[2px] py-3 border-b-[2px] border-solid border-white/50 hover:bg-blue-600 md:hover:bg-none pl-2 md:border-none md:py-1 px-3 md:bg-blue-500 md:rounded-lg"
+              >
+                <a href="auth.html#signup">Signup</a>
+              </li>
+            </div>
+          </ul>
+        </nav>
+        <button
+          class="menu-toggle md:hidden text-black hover:text-white focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16m-7 6h7"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Task Overview -->
+        <section class="bg-white rounded-lg shadow-lg p-6" id="add-task">
+          <h2 class="text-xl font-semibold text-gray-700">Overview</h2>
+          <div class="mt-4 space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">Total Tasks</span>
+              <span class="text-lg font-bold text-gray-800">25</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">Completed Tasks</span>
+              <span class="text-lg font-bold text-green-500">18</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">Pending Tasks</span>
+              <span class="text-lg font-bold text-yellow-500">7</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Add Task -->
+        <section
+          class="bg-white rounded-lg shadow-lg p-6 lg:col-span-2"
+          id="taskes"
+        >
+          <h2 class="text-xl font-semibold text-gray-700">Add a New Task</h2>
+          <form class="mt-4 space-y-4">
+            <div>
+              <label for="task-name" class="block text-gray-600"
+                >Task Name</label
+              >
+              <input
+                type="text"
+                id="task-name"
+                class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                placeholder="Enter task name"
+              />
+            </div>
+            <div>
+              <label for="task-desc" class="block text-gray-600"
+                >Description</label
+              >
+              <textarea
+                id="task-desc"
+                class="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300"
+                rows="3"
+                placeholder="Enter task description"
+              ></textarea>
+            </div>
+            <button
+              class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition"
+            >
+              <a href="auth.html">Add Task</a>
+            </button>
+          </form>
+        </section>
+      </div>
+
+      <!-- Task List -->
+      <section class="mt-6 bg-white rounded-lg shadow-lg p-6" id="prep">
+        <h2 class="text-xl font-semibold text-gray-700">Your Tasks</h2>
+        <ul class="mt-4 divide-y divide-gray-200">
+          <li class="py-4 flex justify-between items-center">
+            <div>
+              <h3 class="font-semibold text-gray-800">
+                Complete Project Report
+              </h3>
+              <p class="text-sm text-gray-600">Due: 2024-12-10</p>
+            </div>
+            <div>
+              <button class="text-green-500 hover:underline">
+                Mark as Done
+              </button>
+              <button class="text-red-500 hover:underline ml-4">Delete</button>
+            </div>
+          </li>
+          <li class="py-4 flex justify-between items-center">
+            <div>
+              <h3 class="font-semibold text-gray-800">Prepare Presentation</h3>
+              <p class="text-sm text-gray-600">Due: 2024-12-07</p>
+            </div>
+            <div>
+              <button class="text-green-500 hover:underline">
+                Mark as Done
+              </button>
+              <button class="text-red-500 hover:underline ml-4">Delete</button>
+            </div>
+          </li>
+          <li class="py-4 flex justify-between items-center">
+            <div>
+              <h3 class="font-semibold text-gray-800">Organize Team Meeting</h3>
+              <p class="text-sm text-gray-600">Due: 2024-12-06</p>
+            </div>
+            <div>
+              <button class="text-green-500 hover:underline">
+                Mark as Done
+              </button>
+              <button class="text-red-500 hover:underline ml-4">Delete</button>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-4 text-center">
+      <p>&copy; 2024 Task Manager. All rights reserved.</p>
+    </footer>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script>
+      // Toggle navigation menu for smaller screens
+      const menuToggle = document.querySelector(".menu-toggle");
+      const nav = document.querySelector(".navbar");
+      const closeBtn = document.querySelector(".close-btn");
+
+      menuToggle.addEventListener("click", () => {
+        console.log("hello....");
+        nav.classList.toggle("translate-x-0");
+      });
+
+      closeBtn.addEventListener("click", () => {
+        nav.classList.toggle("translate-x-0");
+      });
+    </script>
+  </body>
+</html>

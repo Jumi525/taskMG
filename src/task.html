@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Futuristic Task Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Background Gradient Animation */
+      body {
+        background: linear-gradient(135deg, #0f172a, #1d4ed8, #4f46e5);
+        background-size: 300% 300%;
+        animation: gradientMove 6s infinite alternate-reverse;
+        font-family: "Inter", sans-serif;
+      }
+
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 100% 50%;
+        }
+      }
+
+      /* Neon Glow for Active Elements */
+      .neon-border {
+        border: 2px solid transparent;
+        background-clip: padding-box, border-box;
+        background-origin: border-box;
+        background: linear-gradient(45deg, #3b82f6, #ec4899) padding-box,
+          linear-gradient(45deg, #0ea5e9, #9333ea) border-box;
+      }
+
+      #taskList li:hover {
+        transform: scale(1.02) translateY(-2px);
+        transition: all 0.3s ease-in-out;
+      }
+
+      .glow-on-hover {
+        box-shadow: 0 0 8px #6366f1, 0 0 15px #6366f1;
+        transition: box-shadow 0.2s ease-in-out;
+      }
+
+      .glow-on-hover:hover {
+        box-shadow: 0 0 20px #4f46e5, 0 0 40px #4f46e5;
+      }
+    </style>
+  </head>
+  <body class="text-white">
+    <!-- toast -->
+    <div
+      id="toast-container"
+      class="fixed bottom-5 right-5 space-y-3 z-50"
+    ></div>
+    <!-- Container -->
+    <div
+      class="max-w-4xl mx-auto mt-10 p-6 bg-gray-900 bg-opacity-80 neon-border rounded-2xl shadow-xl"
+    >
+      <!-- Header -->
+      <h1
+        class="text-5xl font-bold text-center mb-8 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 animate-pulse"
+      >
+        <i class="fas fa-tasks"></i> Task Manager
+      </h1>
+
+      <!-- Task Input -->
+      <div class="flex items-center gap-4 mb-8">
+        <input
+          id="taskInput"
+          type="text"
+          placeholder="What's your next mission?"
+          class="w-full px-4 py-3 text-gray-900 bg-white rounded-lg focus:outline-none focus:ring-4 focus:ring-blue-500 shadow-md glow-on-hover"
+        />
+        <button
+          id="addTaskBtn"
+          class="px-6 py-3 font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-blue-600 glow-on-hover"
+        >
+          <i class="fas fa-plus-circle"></i> Add
+        </button>
+        <button
+          id="editTaskBtn"
+          class="px-6 py-3 hidden font-bold bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-purple-600 hover:to-blue-600 glow-on-hover"
+        >
+          <i class="fas fa-plus-circle"></i> update
+        </button>
+      </div>
+
+      <!-- Filters -->
+      <div class="flex items-center justify-between mb-6">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search tasks..."
+          class="px-4 py-3 w-1/2 bg-gray-800 rounded-lg shadow-md glow-on-hover focus:outline-none focus:ring-4 focus:ring-purple-500"
+        />
+        <select
+          id="filterSelect"
+          class="px-4 py-3 bg-gray-800 rounded-lg shadow-md glow-on-hover focus:outline-none"
+        >
+          <option value="all">All Tasks</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+        </select>
+      </div>
+
+      <!-- Task List -->
+      <ul id="taskList" class="space-y-4">
+        <!-- Tasks will be dynamically added here -->
+      </ul>
+    </div>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="script.js"></script>
+  </body>
+</html>

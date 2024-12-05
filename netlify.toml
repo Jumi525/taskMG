@@ -1,0 +1,8 @@
+[build]
+  publish = "src"   # Set to your folder containing the main HTML file
+  command = ""      # Leave empty if there’s no build process
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"  # Redirect all requests to your main HTML file
+  status = 200
