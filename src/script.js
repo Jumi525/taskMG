@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:5000/tasks"; // Backend API base URL
+const baseUrl = "https://task-manager-8.netlify.app/tasks"; // Backend API base URL
 
 // DOM Elements
 const taskInput = document.getElementById("taskInput");
