@@ -2,6 +2,10 @@ const baseUrl = "http://localhost:5000/tasks"; // Backend API base URL
 
 // DOM Elements
 const taskInput = document.getElementById("taskInput");
+const dateInput = document.getElementById("dateInput");
+const selectInput = document.getElementById("selectInput");
+const errormsg = document.getElementById("errormsg");
+const textInput = document.getElementById("textInput");
 const addTaskBtn = document.getElementById("addTaskBtn");
 const editTaskBtn = document.getElementById("editTaskBtn");
 const taskList = document.getElementById("taskList");
@@ -15,6 +19,12 @@ let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 // Save Tasks to Local Storage
 function saveTasksToLocalStorage() {
   localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+const token = localStorage.getItem("authToken");
+if (!token) {
+  alert("You must be logged in to access this page.");
+  window.location.href = "/src/auth.html#login"; // Redirect to the login page
 }
 
 // Fetch Tasks from Backend and Sync to Local Storage
@@ -160,11 +170,13 @@ function renderTasks() {
   taskList.innerHTML = "";
   const filterValue = filterSelect.value;
   const searchQuery = searchInput.value.toLowerCase();
-
   const filteredTasks = tasks.filter((task) => {
     const matchesFilter =
       filterValue === "all" ||
       (filterValue === "completed" && task.completed) ||
+      (filterValue === "low" && task.select === "low") ||
+      (filterValue === "medium" && task.select === "medium") ||
+      (filterValue === "high" && task.select === "high") ||
       (filterValue === "pending" && !task.completed);
     const matchesSearch = task.text.toLowerCase().includes(searchQuery);
     return matchesFilter && matchesSearch;
@@ -172,17 +184,43 @@ function renderTasks() {
 
   filteredTasks.forEach((task) => {
     const li = document.createElement("li");
-    li.className =
-      "flex items-center justify-between p-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300";
+    li.className = `flex gap-4 items-center justify-between cursor-pointer p-4 bg-gray-800 rounded-lg shadow-md hover:shadow-lg transform hover:scale-105 transition-all duration-300 ${
+      task.completed ? "line-through text-gray-500" : "text-gray-200"
+    }`;
+
+    // li.addEventListener("click", () => toggleTaskCompletion(task.id, task));
+
+    const card = document.createElement("div");
+    card.className = "flex flex-col";
+
+    card.addEventListener("click", () => toggleTaskCompletion(task._id, task));
 
     const taskText = document.createElement("span");
     taskText.textContent = task.text;
-    taskText.className = `flex-1 cursor-pointer ${
-      task.completed ? "line-through text-gray-500" : "text-gray-200"
-    }`;
-    taskText.addEventListener("click", () =>
-      toggleTaskCompletion(task.id, task)
-    );
+    taskText.className = "flex-1";
+
+    const div = document.createElement("div");
+    div.className = "flex items-center justify-between";
+
+    const dates = document.createElement("span");
+    dates.textContent = `Date: ${task.date}`;
+    dates.className = "";
+
+    div.append(dates);
+
+    const descript = document.createElement("span");
+    descript.textContent = `Description: ${task.textarea}`;
+
+    const btns = document.createElement("div");
+    btns.className = "flex";
+
+    const priority = document.createElement("span");
+    priority.textContent = task.select;
+    priority.className = `rounded-full px-2 py-1 border-[2px] ${
+      (task.select === "low" && "border-green-500") ||
+      (task.select === "medium" && "border-blue-500") ||
+      (task.select === "high" && "border-red-500")
+    } mr-2`;
 
     const editBtn = document.createElement("button");
     editBtn.innerHTML = `<ion-icon name="create-outline" class='size-6'></ion-icon>`;
@@ -191,7 +229,11 @@ function renderTasks() {
     editBtn.addEventListener("click", () => {
       editTaskBtn.classList.remove("hidden");
       addTaskBtn.classList.add("hidden");
+      // addTaskBtn.;
       taskInput.value = task.text;
+      dateInput.value = task.date;
+      selectInput.value = task.select;
+      textInput.value = task.textarea;
       store = task;
       // editTask(task.id, task);
     });
@@ -200,24 +242,41 @@ function renderTasks() {
     deleteBtn.innerHTML = `<ion-icon name="trash-outline" class='size-6'></ion-icon>`;
     deleteBtn.className =
       "grid place-content-center p-1 border-[2px] border-solid border-red-500 rounded-md text-white hover:text-red-600";
-    deleteBtn.addEventListener("click", () => deleteTask(task.id));
+    deleteBtn.addEventListener("click", () => deleteTask(task._id));
 
-    li.appendChild(taskText);
-    li.appendChild(editBtn);
-    li.appendChild(deleteBtn);
+    card.appendChild(taskText);
+    card.appendChild(div);
+    card.appendChild(descript);
+
+    btns.appendChild(priority);
+    btns.appendChild(editBtn);
+    btns.appendChild(deleteBtn);
+
+    li.appendChild(card);
+    li.append(btns);
 
     taskList.appendChild(li);
   });
 }
 
 // Add Task
-addTaskBtn.addEventListener("click", () => {
+addTaskBtn.addEventListener("click", (event) => {
+  event.preventDefault();
   const taskText = taskInput.value.trim();
-  if (taskText) {
-    const task = { text: taskText, completed: false };
+  const date = dateInput.value;
+  const select = selectInput.value;
+  const textarea = textInput.value;
+  if (taskText && date && select && textarea) {
+    const task = { text: taskText, date, select, textarea, completed: false };
     taskInput.value = "";
+    dateInput.value = "";
+    selectInput.value = "low";
+    textInput.value = "";
     showToast(`Success!, Added "${taskText}" to the list`, "success");
     addTaskToBackend(task); // Save to backend
+  } else {
+    errormsg.innerHTML = `<p class="text-red-900">All input fields are required</p>`;
+    setTimeout(() => errormsg.remove(), 2000);
   }
 });
 
@@ -230,22 +289,33 @@ function toggleTaskCompletion(id, task) {
 }
 
 // Edit Task
-function editTask() {
-  console.log("called");
-  const newTaskText = taskInput.value;
-  if (newTaskText !== null) {
-    const updatedTask = { ...store, text: newTaskText.trim() };
+editTaskBtn.addEventListener("click", (event) => {
+  event.preventDefault();
+  const taskText = taskInput.value.trim();
+  const date = dateInput.value;
+  const select = selectInput.value;
+  const textarea = textInput.value;
+  if (taskText && date && select && textarea) {
+    const updatedTask = {
+      ...store,
+      text: taskText.trim(),
+      date,
+      select,
+      textarea,
+      completed: store.completed,
+    };
     taskInput.value = "";
+    dateInput.value = "";
+    selectInput.value = "low";
+    textInput.value = "";
+
     editTaskBtn.classList.add("hidden");
     addTaskBtn.classList.remove("hidden");
-    showToast(
-      `Success!, Updated "${store.text}" to "${newTaskText}"`,
-      "success"
-    );
-    updateTaskInBackend(store.id, updatedTask); // Update backend
+    console.log(updatedTask);
+    showToast(`Success!, Updated "${store.text}" to "${taskText}"`, "success");
+    updateTaskInBackend(store._id, updatedTask); // Update backend
   }
-}
-editTaskBtn.addEventListener("click", editTask);
+});
 
 // Delete Task
 function deleteTask(id) {
