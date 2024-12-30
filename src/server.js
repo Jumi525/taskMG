@@ -1,108 +1,108 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const mongoose = require("mongoose");
+// const express = require("express");
+// const bodyParser = require("body-parser");
+// const cors = require("cors");
+// const mongoose = require("mongoose");
 
-// Initialize Express App
-const app = express();
+// // Initialize Express App
+// const app = express();
 
-// Middleware
-app.use(cors());
-app.use(bodyParser.json());
+// // Middleware
+// app.use(cors());
+// app.use(bodyParser.json());
 
-// Connect to MongoDB
-mongoose.set("strictQuery", false);
-mongoose
-  .connect("mongodb://localhost:27017/tasksDB", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("Failed to connect to MongoDB:", err));
+// // Connect to MongoDB
+// mongoose.set("strictQuery", false);
+// mongoose
+//   .connect("mongodb://localhost:27017/tasksDB", {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   })
+//   .then(() => console.log("Connected to MongoDB"))
+//   .catch((err) => console.error("Failed to connect to MongoDB:", err));
 
-// Define Task Schema
-const taskSchema = new mongoose.Schema({
-  text: { type: String, required: true },
-  date: { type: String, required: true },
-  select: { type: String, required: true },
-  textarea: { type: String, required: true },
-  completed: { type: Boolean, required: true },
-});
+// // Define Task Schema
+// const taskSchema = new mongoose.Schema({
+//   text: { type: String, required: true },
+//   date: { type: String, required: true },
+//   select: { type: String, required: true },
+//   textarea: { type: String, required: true },
+//   completed: { type: Boolean, required: true },
+// });
 
-// db.tasks.insertOne({ text: "Test Task", completed: false });
+// // db.tasks.insertOne({ text: "Test Task", completed: false });
 
-// Create Task Model
-const Task = mongoose.model("Task", taskSchema);
+// // Create Task Model
+// const Task = mongoose.model("Task", taskSchema);
 
-// API Endpoints
+// // API Endpoints
 
-// Get All Tasks
-app.get("/tasks", async (req, res) => {
-  try {
-    const tasks = await Task.find();
-    res.json(tasks);
-  } catch (err) {
-    res.status(500).json({ error: "Failed to fetch tasks" });
-  }
-});
+// // Get All Tasks
+// app.get("/tasks", async (req, res) => {
+//   try {
+//     const tasks = await Task.find();
+//     res.json(tasks);
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to fetch tasks" });
+//   }
+// });
 
-// Add a Task
-app.post("/tasks", async (req, res) => {
-  try {
-    const task = new Task(req.body);
+// // Add a Task
+// app.post("/tasks", async (req, res) => {
+//   try {
+//     const task = new Task(req.body);
 
-    await task.save();
-    res.json({ message: "Task added successfully!", task });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to add task" });
-  }
-});
+//     await task.save();
+//     res.json({ message: "Task added successfully!", task });
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to add task" });
+//   }
+// });
 
-// Update a Task
-app.put("/tasks/:id", async (req, res) => {
-  const { id } = req.params;
-  try {
-    const updatedTask = await Task.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    if (!updatedTask) {
-      return res.status(404).json({ error: "Task not found" });
-    }
-    res.json({ message: "Task updated successfully!", updatedTask });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to update task" });
-  }
-});
+// // Update a Task
+// app.put("/tasks/:id", async (req, res) => {
+//   const { id } = req.params;
+//   try {
+//     const updatedTask = await Task.findByIdAndUpdate(id, req.body, {
+//       new: true,
+//     });
+//     if (!updatedTask) {
+//       return res.status(404).json({ error: "Task not found" });
+//     }
+//     res.json({ message: "Task updated successfully!", updatedTask });
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to update task" });
+//   }
+// });
 
-async function updateCourse(id, task) {
-  const course = await Course.findById(id);
-  if (!course) return;
-  course.set({
-    ...task,
-  });
-  const result = await course.save();
-}
+// async function updateCourse(id, task) {
+//   const course = await Course.findById(id);
+//   if (!course) return;
+//   course.set({
+//     ...task,
+//   });
+//   const result = await course.save();
+// }
 
-// Delete a Task
-app.delete("/tasks/:id", async (req, res) => {
-  const { id } = req.params;
-  console.log(id, "ids");
-  try {
-    const deletedTask = await Task.findByIdAndDelete(id);
-    if (!deletedTask) {
-      return res.status(404).json({ error: "Task not found" });
-    }
-    res.json({ message: "Task deleted successfully!", deletedTask });
-  } catch (err) {
-    res.status(500).json({ error: "Failed to delete task" });
-  }
-});
+// // Delete a Task
+// app.delete("/tasks/:id", async (req, res) => {
+//   const { id } = req.params;
+//   console.log(id, "ids");
+//   try {
+//     const deletedTask = await Task.findByIdAndDelete(id);
+//     if (!deletedTask) {
+//       return res.status(404).json({ error: "Task not found" });
+//     }
+//     res.json({ message: "Task deleted successfully!", deletedTask });
+//   } catch (err) {
+//     res.status(500).json({ error: "Failed to delete task" });
+//   }
+// });
 
-// Start Server
-const PORT = 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+// // Start Server
+// const PORT = 5000;
+// app.listen(PORT, () => {
+//   console.log(`Server running on http://localhost:${PORT}`);
+// });
 
 // const express = require("express");
 // const bodyParser = require("body-parser");
