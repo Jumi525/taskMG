@@ -218,11 +218,14 @@
       async function handleLoginSubmit(event) {
         event.preventDefault();
 
-        const response = await fetch(`http://localhost:5000/api/auth/login`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: email.value, password: pass.value }),
-        });
+        const response = await fetch(
+          `https://task-manager-8.netlify.app/api/auth/login`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: email.value, password: pass.value }),
+          }
+        );
 
         const data = await response.json();
         if (data.token) {
@@ -240,15 +243,18 @@
       async function handleSignup(event) {
         event.preventDefault();
 
-        const response = await fetch(`http://localhost:5000/api/auth/signup`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: names.value,
-            email: sigEmail.value,
-            password: sigPass.value,
-          }),
-        });
+        const response = await fetch(
+          `https://task-manager-8.netlify.app/api/auth/signup`,
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              username: names.value,
+              email: sigEmail.value,
+              password: sigPass.value,
+            }),
+          }
+        );
 
         const data = await response.json();
         console.log(data.message || data.error);
