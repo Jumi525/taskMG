@@ -4,7 +4,8 @@
   "description": "highlight and arranging of task",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node ./src/auths.js"
   },
   "repository": {
     "type": "git",
